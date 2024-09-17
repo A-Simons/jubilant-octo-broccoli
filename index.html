@@ -1,0 +1,168 @@
+<html lang="en">
+<head>
+<title>CFRMIS Premises (by Type)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+<link rel="stylesheet" href="style.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"
+     crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.12.1/proj4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
+</head>
+<body>
+  
+<div id="map"></div>
+  <script src="script.js"></script>
+
+<div id="info">
+  <div class="title">CFRMIS Premises (by Type)</div>
+    <div class="location">
+      <div><button class="locButton" onclick="mapCentre=northants;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Northamptonshire</button></div><div>
+      <button class="locButton" onclick="mapCentre=westNorthants;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">West Northamptonshire</button></div><div>
+      <button class="locButton" onclick="mapCentre=northNorthants;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">North Northamptonshire</button>
+    </div>
+    <div>
+      <button class="locButton" onclick="mapCentre=northampton;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Northampton</button></div><div>
+      <button class="locButton" onclick="mapCentre=daventry;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Daventry</button></div><div>
+      <button class="locButton" onclick="mapCentre=brackley;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Brackley</button></div><div>
+      <button class="locButton" onclick="mapCentre=towcester;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Towcester</button>
+    </div>
+    <div>
+      <button class="locButton" onclick="mapCentre=corby;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Corby</button></div><div>
+      <button class="locButton" onclick="mapCentre=kettering;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Kettering</button></div><div>
+      <button class="locButton" onclick="mapCentre=wellingborough;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Wellingborough</button>
+    </div>
+  </div>
+</div>
+
+<div id="legend">
+  <div>
+    <input type="file" accept=".csv" onchange="readFile(event);"/>
+  </div>
+  <div>
+  <div class="dark-light">
+    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>
+  </div>
+  <div class="color-light">
+    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path class="rainbow1" d="M 19.713 20.945 L 14.013 20.945 C 14.149 16.925 17.416 13.698 21.453 13.625 L 21.453 19.316 C 20.558 19.381 19.836 20.067 19.713 20.945 Z"></path>
+<path class="rainbow2" d="M 14.013 20.945 L 8.324 20.945 C 8.463 13.783 14.275 8.011 21.453 7.938 L 21.453 13.625 C 17.416 13.698 14.149 16.925 14.013 20.945 Z"></path>
+<path class="rainbow3" d="M 8.324 20.945 L 3.571 20.945 C 3.71 11.158 11.651 3.259 21.453 3.185 L 21.453 7.938 C 14.275 8.011 8.463 13.783 8.324 20.945 Z"></path>
+</svg>
+   </div>
+</div>
+<!--
+  <div class="item allDP">Domestic Premises</div>
+  <div class="item hotel">Hotels</div>
+  <div class="item factory">Factories</div>
+  <div class="item warehouse">Warehouses</div>
+  <div class="item office">Offices</div>
+  <div class="item lic">Licensed Premises</div>
+  <div class="item waste">Waste Sites</div>
+  <div class="item solar">Solar farms & BESS</div>
+  <div class="item care">Care Premises</div>
+  <div class="item health">Healthcare Premises</div>
+  <div class="item school">Schools</div>
+  <div class="item flats">Flats</div>
+  <div class="item hmo">HMOs</div>
+  <div class="item sleep">Other Sleeping</div>
+  <div class="item prop">Proposed</div>
+  <div class="item sport">Sports Grounds</div>
+  <div class="item comm">Community Centres</div>
+  <div class="item other">Other</div>
+-->
+
+<table>
+      <tr>
+        <td><button class="filterButton all" id="all" onclick="premSelect=['A01A  ', 'A01H  ', 'A02A  ', 'A02B  ', 'A02H  ', 'A03A  ', 'A04A  ', 'A04H  ', 'A05A  ', 'A06A  ', 'A07A  ', 'A07B  ', 'A07C  ', 'B06A  ', 'B06B  ', 'B07A  ', 'B07B  ', 'B08A  ', 'B08B  ', 'B08C  ', 'B08D  ', 'C09A  ', 'C09B  ', 'C09C  ', 'C09D  ', 'C09E  ', 'C09F  ', 'C10A  ', 'C10B  ', 'C11A  ', 'C12A  ', 'C13A  ', 'C13A04', 'C13A05', 'C13A06', 'C13A07', 'C13A08', 'C13A09', 'C13A10', 'C13A11', 'C13A12', 'C14A  ', 'C14B  ', 'C14C  ', 'C14H  ', 'C15A  ', 'C15B  ', 'C15C  ', 'C15D  ', 'C16A  ', 'C16B  ', 'C16B03', 'C16B04', 'C16B05', 'C16B06', 'C16B07', 'C16B08', 'C16B09', 'C16B10', 'C16B11', 'C16B12', 'C16C  ', 'C16D  ', 'C16E  ', 'C16F  ', 'C16G  ', 'C16H  ', 'D17A  ', 'D18A  ', 'D19   ', 'D19A  ', 'D19B  ', 'D20A  ', 'D21A  ', 'D21B  ', 'D21C  ', 'D21D  ', 'D22A  ', 'D22B  ', 'D22C  ', 'D23A  ', 'D24A  ', 'D24B  ', 'D24C  ', 'D24D  ', 'D25A  ', 'D26A  ', 'D27A  ', 'D27B  ', 'D27C  ', 'D27D  ', 'D27E  ', 'D27F  ', 'D27G  ', 'D27H  ', 'D27I  ', 'D27J  ', 'D27K  ', 'D27L  ', 'D27M  ', 'D27N  ', 'D27O  ', 'D27P  ', 'D27Q  ', 'D27R  ', 'D27S  ']"></button></td>
+        <td>All Premises</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton allDP" id="allDP" onclick="premSelect=['C16E  ']"></button></td>
+        <td>All Domestic Premises</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton allOB" id="allOB" onclick="premSelect=['A01A  ', 'A01H  ', 'A02A  ', 'A02B  ', 'A02H  ', 'A03A  ', 'A04A  ', 'A04H  ', 'A05A  ', 'A06A  ', 'A07A  ', 'A07B  ', 'A07C  ', 'B06A  ', 'B06B  ', 'B07A  ', 'B07B  ', 'B08A  ', 'B08B  ', 'B08C  ', 'B08D  ', 'C09A  ', 'C09B  ', 'C09C  ', 'C09D  ', 'C09E  ', 'C09F  ', 'C10A  ', 'C10B  ', 'C11A  ', 'C12A  ', 'C13A  ', 'C13A04', 'C13A05', 'C13A06', 'C13A07', 'C13A08', 'C13A09', 'C13A10', 'C13A11', 'C13A12', 'C14A  ', 'C14B  ', 'C14C  ', 'C14H  ', 'C15A  ', 'C15B  ', 'C15C  ', 'C15D  ', 'C16A  ', 'C16B  ', 'C16B03', 'C16B04', 'C16B05', 'C16B06', 'C16B07', 'C16B08', 'C16B09', 'C16B10', 'C16B11', 'C16B12', 'C16C  ', 'C16D  ', 'C16F  ', 'C16G  ', 'C16H  ', 'D17A  ', 'D18A  ', 'D19   ', 'D19A  ', 'D19B  ', 'D20A  ', 'D21A  ', 'D21B  ', 'D21C  ', 'D21D  ', 'D22A  ', 'D22B  ', 'D22C  ', 'D23A  ', 'D24A  ', 'D24B  ', 'D24C  ', 'D24D  ', 'D25A  ', 'D26A  ', 'D27A  ', 'D27B  ', 'D27C  ', 'D27D  ', 'D27E  ', 'D27F  ', 'D27G  ', 'D27H  ', 'D27I  ', 'D27J  ', 'D27K  ', 'D27L  ', 'D27M  ', 'D27N  ', 'D27O  ', 'D27P  ', 'D27Q  ', 'D27R  ', 'D27S  ']"></button></td>
+        <td>All Other Premises</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton hotel" onclick="premSelect=['A01A  ','C16A  ']"></button></td>
+        <td>Hotel</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton factory" onclick="premSelect=['A02A  ','B06A  ']"></button></td>
+        <td>Factory</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton warehouse" onclick="premSelect=['A02B  ']"></button></td>
+        <td>Warehouse</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton office" onclick="premSelect=['A03A  ','B07A  ']"></button></td>
+        <td>Office</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton shop" onclick="premSelect=['A04A  ','A04H  ','B08A  ']"></button></td>
+        <td>Shop</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton lic" onclick="premSelect=['D21A  ']"></button></td>
+        <td>Licensed Premises</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton waste" onclick="premSelect=['A06A  ']"></button></td>
+        <td>Waste Sites</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton solar" onclick="premSelect=['A07A  ','A07B  ','A07C  ']"></button></td>
+        <td>Solar farms and BESS</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton care" onclick="premSelect=['C09A  ','C09B  ','C09C  ','C09D  ','C09E  ','C09F  ']"></button></td>
+        <td>Care Premises</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton health" onclick="premSelect=['C10A  ','D27B  ','D27C  ','D27D  ']"></button></td>
+        <td>Healthcare Premises</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton school" onclick="premSelect=['C11A  ','C12A  ','D24A  ','D24B  ','D24C  ','D24D  ','D27E  ']"></button></td>
+        <td>School</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton flats" onclick="premSelect=['C13A  ','C13A04','C13A05','C13A06','C13A07','C13A08','C13A09','C13A10','C13A11','C13A12']"></button></td>
+        <td>Flats</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton hmo" onclick="premSelect=['C14A  ','C14B  ','C14C  ','C14H  ','C15A  ','C15B  ','C15C  ','C15D  ']"></button></td>
+        <td>HMO</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton sleep" onclick="premSelect=['C16B  ','C16B04','C16B05','C16B06','C16B07','C16B08','C16B09','C16B10','C16B11','C16B12','C16C  ','C16D  ','C16E  ','C16F  ','C16G  ','C16H  ']"></button></td>
+        <td>Other Sleeping</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton prop" onclick="premSelect=['D19   ','D19A  ','D19B  ',]"></button></td>
+        <td>Proposed</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton sport" onclick="premSelect=['D25A  ','D26A  ']"></button></td>
+        <td>Sports Grounds</td>
+      </tr>
+       <tr>
+        <td><button class="filterButton comm" onclick="premSelect=['D20A  ','D27A  ']"></button></td>
+        <td>Community Centre</td>
+      </tr>
+      <tr>
+        <td><button class="filterButton other" onclick="premSelect=['D22A  ','D23A  ','D27F  ','D27G  ','D27H  ','D27I  ','D27K  ','D27L  ','D27M  ','D27N  ','D27O  ','D27P  ','D27Q  ','D27R  ','D27S  ']"></button></td>
+        <td>Other</td>
+      </tr>
+    </table>
+</div>
+</body>
+</html>
