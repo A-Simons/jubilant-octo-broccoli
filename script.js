@@ -3,7 +3,6 @@ const container = document.getElementById("chart");
 var csvData = [0, 0];
 var map;
 var colourfulMode = true;
-var premSelect = fltAll;
 
 // Define constants grouping Sup Line Nos. into premises types
 const fltAll = ['A01A  ', 'A01H  ', 'A02A  ', 'A02B  ', 'A02H  ', 'A03A  ', 'A04A  ', 'A04H  ', 'A05A  ', 'A06A  ', 'A07A  ', 'A07B  ', 'A07C  ', 'B06A  ', 'B06B  ', 'B07A  ', 'B07B  ', 'B08A  ', 'B08B  ', 'B08C  ', 'B08D  ', 'C09A  ', 'C09B  ', 'C09C  ', 'C09D  ', 'C09E  ', 'C09F  ', 'C10A  ', 'C10B  ', 'C11A  ', 'C12A  ', 'C13A  ', 'C13A04', 'C13A05', 'C13A06', 'C13A07', 'C13A08', 'C13A09', 'C13A10', 'C13A11', 'C13A12', 'C14A  ', 'C14B  ', 'C14C  ', 'C14H  ', 'C15A  ', 'C15B  ', 'C15C  ', 'C15D  ', 'C16A  ', 'C16B  ', 'C16B03', 'C16B04', 'C16B05', 'C16B06', 'C16B07', 'C16B08', 'C16B09', 'C16B10', 'C16B11', 'C16B12', 'C16C  ', 'C16D  ', 'C16E  ', 'C16F  ', 'C16G  ', 'C16H  ', 'D17A  ', 'D18A  ', 'D19   ', 'D19A  ', 'D19B  ', 'D20A  ', 'D21A  ', 'D21B  ', 'D21C  ', 'D21D  ', 'D22A  ', 'D22B  ', 'D22C  ', 'D23A  ', 'D24A  ', 'D24B  ', 'D24C  ', 'D24D  ', 'D25A  ', 'D26A  ', 'D27A  ', 'D27B  ', 'D27C  ', 'D27D  ', 'D27E  ', 'D27F  ', 'D27G  ', 'D27H  ', 'D27I  ', 'D27J  ', 'D27K  ', 'D27L  ', 'D27M  ', 'D27N  ', 'D27O  ', 'D27P  ', 'D27Q  ', 'D27R  ', 'D27S  '];
@@ -27,6 +26,8 @@ const fltProp = ['D19   ','D19A  ','D19B  ',];
 const fltSport = ['D25A  ','D26A  '];
 const fltComm = ['D20A  ','D27A  '];
 const fltOther = ['D22A  ','D23A  ','D27F  ','D27G  ','D27H  ','D27I  ','D27K  ','D27L  ','D27M  ','D27N  ','D27O  ','D27P  ','D27Q  ','D27R  ','D27S  '];
+
+var premSelect = fltAll;
 
 // Co-ordinates of preset locations throughout county, each array is [latitude, longitude, zoom level]
 const northants = [52.283333, -0.833333, 10];
