@@ -1,0 +1,250 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:300,400,700);
+
+:root {
+  --colHotel: #ce535e;
+  --colFactory: #ba5118;
+  --colWarehouse: #e1a602;
+  --colOffice: #b69f5e;
+  --colShop: #649a9f;
+  --colLic: #701C62;
+  --colWaste: #8C5762;
+  --colSolar: #90AD1C;
+  --colCare: #39AF5B;
+  --colHealth: #ab2328;
+  --colSchool: #7688BB;
+  --colFlats: #2B648E;
+  --colHmo: #4F4351;
+  --colSleep: #DE67B4;
+  --colProp: Silver;
+  --colSport: SeaGreen;
+  --colComm: violet;
+  --colOther: Tomato;
+  
+  --background: #ececeb;
+  --foreground: #3c3c3b;
+  --darkmode-icon-color: #3c3c3b;
+  --colorful-icon-color: #3c3c3b;
+}
+
+.dark-light {
+ width: 22px;
+ height: 22px;
+ color: var(--darkmode-icon-color);
+ flex-shrink: 0;
+
+ svg {
+  width: 100%;
+  fill: transparent;
+  transition: 0.5s;
+ }
+}
+
+.dark-mode {
+  --background: #1d1d1d;
+  --foreground: #ececeb;
+  --darkmode-icon-color: #ececeb;
+  .dark-light svg {
+  fill: #e1a602;
+  }
+}
+
+.color-light {
+ width: 22px;
+ height: 22px;
+ color: var(--darkmode-icon-color);
+ flex-shrink: 0;
+
+ svg {
+  width: 100%;
+  fill: transparent;
+  transition: 0.5s;
+ }
+}
+
+.color-mode {
+  --colorful-icon-color: #ececeb;
+  .color-light svg {
+    .rainbow1 {
+  fill: #90AD1C;
+    }
+    .rainbow2 {
+  fill: #e1a602;
+    }
+    .rainbow3 {
+  fill: #ab2328;
+    }
+  }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  padding: none;
+  margin: none;
+}
+
+div {
+  margin: 0;
+}
+
+button {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+}
+
+#map {
+  height: 96vh;
+}
+
+.leaflet-container .leaflet-tile-pane img {
+  filter: grayscale(1)opacity(0.3);
+}
+
+.leaflet-tooltip-pane h4 {
+  margin: 0;
+  font-size: 1.25em;
+}
+
+#legend {
+  position: absolute;
+  right: 10px;
+  top: 100px;
+  width: 220px;
+  z-index: 1000;
+  background: var(--background);
+  opacity: 0.8;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+#legend input {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+}
+
+#info {
+  position: absolute;
+  top: 100px;
+  left: 10px;
+}
+
+.locButton {
+  text-align: center;
+  width: 80%;
+  margin: 5px;
+  font-size: medium;
+}
+
+.title {
+  margin: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.filterButton {
+  border: 2px solid var(--foreground);
+  color: white;
+  padding: 5pt;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  //border-radius: 100%;
+}
+
+.all {
+  background: var(--foreground)
+}
+
+.allDP {
+  background: var(--colSleep)
+}
+
+.allOB {
+  background: var(--colProp)
+}
+
+.hotel {
+  background: var(--colHotel)
+}
+
+.factory {
+  background: var(--colFactory)
+}
+
+.warehouse {
+  background: var(--colWarehouse)
+}
+
+.office {
+  background: var(--colOffice)
+}
+
+.shop {
+  background: var(--colShop)
+}
+
+.lic {
+  background: var(--colLic)
+}
+
+.waste {
+  background: var(--colWaste)
+}
+
+.solar {
+  background: var(--colSolar)
+}
+
+.care {
+  background: var(--colCare)
+}
+
+.health {
+  background: var(--colHealth)
+}
+
+.school {
+  background: var(--colSchool)
+}
+
+.flats {
+  background: var(--colFlats)
+}
+
+.hmo {
+  background: var(--colHmo)
+}
+
+.sleep {
+  background: var(--colSleep)
+}
+
+.prop {
+  background: var(--colProp)
+}
+
+.sport {
+  background: var(--colSport)
+}
+
+.comm {
+  background: var(--colComm)
+}
+
+.other {
+  background: var(--colOther)
+}
