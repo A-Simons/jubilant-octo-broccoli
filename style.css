@@ -76,16 +76,121 @@
   }
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background: var(--background);
   color: var(--foreground);
-  padding: none;
-  margin: none;
+  height: 100vh;
+  width: 100vw;
 }
 
-div {
-  margin: 0;
+* {
+  box-sizing: border-box;
+}
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--background);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  position: relative;
+  background-color: var(--background);
+  margin: 15% auto;
+  padding: 0px;
+  border: 1px solid var(--foreground);
+  max-width: 30%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.modal-body {
+  padding: 2px 16px;
+}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.modal-close-button {
+  background-color: var(--foreground);
+  color: var(--background);
+  float: right;
+  border: 1px solid var(--foreground);
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 14px;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+  color: #670002;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-okay-button {
+  background-color: var(--background);
+  color: var(--foreground);
+  float: center;
+  border: 2px solid var(--foreground);
+  font-size: 28px;
+  font-weight: bold;
+  width: 200px;
+  max-width: 50%;
+  margin: 2vh auto;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.modal-okay-button:hover,
+.modal-okay-button:focus {
+  background-color: var(--foreground);
+  color: var(--background);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modal-logo {
+  text-align: center
+}
+
+#modal-logo span {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        vertical-align: middle;
+        border-radius: 0;
+        border: 2px solid var(--foreground);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+        background-repeat: no-repeat;
+        background-position: center;
+        text-align: center;
+        line-height: 12px;
 }
 
 button {
@@ -95,7 +200,8 @@ button {
 }
 
 #map {
-  height: 96vh;
+  height: 100%;
+  width: 100%;
 }
 
 .leaflet-container .leaflet-tile-pane img {
@@ -130,15 +236,135 @@ button {
 }
 
 #legend input {
-  background: var(--background);
-  color: var(--foreground);
   font-family: 'Inter', sans-serif;
+  width: 100%;
+}
+
+#divPremisesFilter {
+  
+  input[type="radio"] {
+    display: none;
+
+    + label {
+      color: #333;
+
+      span {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        vertical-align: middle;
+        cursor: pointer;
+        border-radius: 0;
+        border: 2px solid var(--foreground);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+        background-repeat: no-repeat;
+        background-position: center;
+        text-align: center;
+        line-height: 12px;
+
+        svg {
+          margin-top: 1px;
+          height: 100%;
+          vertical-align: middle;
+          fill: var(--background);
+          opacity: 0;
+          transition: all .3s ease;
+        }
+     }
+  }
+
+  &#radio-all + label span {
+    background-color: var(--foreground);
+  }
+
+  &#radio-allDP + label span {
+    background-color: var(--foreground);
+  }
+
+  &#radio-allOB + label span {
+    background-color: var(--foreground);
+  }
+
+  &#radio-hotel + label span {
+    background-color: var(--colHotel);
+  }
+
+  &#radio-factory + label span {
+    background-color: var(--colFactory);
+  }
+
+  &#radio-warehouse + label span {
+    background-color: var(--colWarehouse);
+  }
+
+  &#radio-office + label span {
+    background-color: var(--colOffice);
+  }
+
+  &#radio-shop + label span {
+    background-color: var(--colShop);
+  }
+
+  &#radio-lic + label span {
+    background-color: var(--colLic);
+  }
+
+  &#radio-waste + label span {
+    background-color: var(--colWaste);
+  }
+
+  &#radio-solar + label span {
+    background-color: var(--colSolar);
+  }
+
+  &#radio-care + label span {
+    background-color: var(--colCare);
+  }
+
+  &#radio-health + label span {
+    background-color: var(--colHealth);
+  }
+
+  &#radio-school + label span {
+    background-color: var(--colSchool);
+  }
+
+  &#radio-flats + label span {
+    background-color: var(--colFlats);
+  }
+
+  &#radio-hmo + label span {
+    background-color: var(--colHmo);
+  }
+
+  &#radio-prop + label span {
+    background-color: var(--colProp);
+  }
+
+  &#radio-sport + label span {
+    background-color: var(--colSport);
+  }
+
+  &#radio-comm + label span {
+    background-color: var(--colComm);
+  }
+
+  &#radio-other + label span {
+    background-color: var(--colOther);
+  }
+
+  &:checked + label span svg {
+    opacity: 1;
+  }
+}
 }
 
 #info {
   position: absolute;
   top: 100px;
   left: 10px;
+  z-index: 1000;
 }
 
 .locButton {
@@ -154,35 +380,25 @@ button {
   font-weight: bold;
 }
 
-.filterButton {
-  border: 2px solid var(--foreground);
-  color: white;
-  padding: 5pt;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  //border-radius: 100%;
-}
-
-.all {
-  background: var(--foreground)
-}
 
 .allDP {
-  background: var(--colSleep)
+  border-color: var(--foreground);
+  background: var(--foreground);
 }
 
 .allOB {
-  background: var(--colProp)
+  border-color: var(--foreground);
+  background: var(--foreground);
 }
 
 .hotel {
+  border-color: var(--colHotel);
   background: var(--colHotel)
 }
 
-.factory {
-  background: var(--colFactory)
+#factory {
+  border-color: var(--colFactory_;
+  background-color: var(--colFactory);
 }
 
 .warehouse {
