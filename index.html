@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-<title>CFRMIS Premises (by Type)</title>
+<title>Premises (by Type)</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/>
@@ -15,11 +15,49 @@
 </head>
 <body>
   
+<div id="modalIntro" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-close-button">&times;</div>
+      <h1>Premises Plotter</h1>
+      <div id="modal-logo">
+        <p>
+          <span style="background-color: var(--colHotel)"></span>
+          <span style="background-color: var(--colFactory)"></span>
+          <span style="background-color: var(--colWarehouse)"></span>
+          <span style="background-color: var(--colOffice)"></span>
+          <span style="background-color: var(--colShop)"></span>
+          <span style="background-color: var(--colLic)"></span>
+          <span style="background-color: var(--colWaste)"></span>
+          <span style="background-color: var(--colSolar)"></span>
+          <span style="background-color: var(--colCare)"></span>
+          <span style="background-color: var(--colHealth)"></span>
+          <span style="background-color: var(--colSchool)"></span>
+          <span style="background-color: var(--colFlats)"></span>
+          <span style="background-color: var(--colHmo)"></span>
+          <span style="background-color: var(--colSleep)"></span>
+          <span style="background-color: var(--colProp)"></span>
+          <span style="background-color: var(--colSport)"></span>
+          <span style="background-color: var(--colComm)"></span>
+          <span style="background-color: var(--colOther)"></span>
+        </p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p>This tool contains <strong>no</strong> data, you will need to upload a .csv file containing a list of premises.</p>
+      <p>You can do this by clicking on the button in the panel to the right of the screen.</p>
+      <div class="modal-okay-button">OK</div>
+    </div>
+    <div class="modal-footer">
+      <p>Some sort of disclaimer message should go here, probably.</p>
+    </div>
+  </div>
+</div>
+
 <div id="map"></div>
-  <script src="script.js"></script>
 
 <div id="info">
-  <div class="title">CFRMIS Premises (by Type)</div>
+  <div class="title">Premises (by Type)</div>
     <div class="location">
       <div><button class="locButton" onclick="mapCentre=northants;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">Northamptonshire</button></div><div>
       <button class="locButton" onclick="mapCentre=westNorthants;map.flyTo([mapCentre[0], mapCentre[1]], mapCentre[2])">West Northamptonshire</button></div><div>
@@ -56,113 +94,113 @@
 </svg>
    </div>
 </div>
-<!--
-  <div class="item allDP">Domestic Premises</div>
-  <div class="item hotel">Hotels</div>
-  <div class="item factory">Factories</div>
-  <div class="item warehouse">Warehouses</div>
-  <div class="item office">Offices</div>
-  <div class="item lic">Licensed Premises</div>
-  <div class="item waste">Waste Sites</div>
-  <div class="item solar">Solar farms & BESS</div>
-  <div class="item care">Care Premises</div>
-  <div class="item health">Healthcare Premises</div>
-  <div class="item school">Schools</div>
-  <div class="item flats">Flats</div>
-  <div class="item hmo">HMOs</div>
-  <div class="item sleep">Other Sleeping</div>
-  <div class="item prop">Proposed</div>
-  <div class="item sport">Sports Grounds</div>
-  <div class="item comm">Community Centres</div>
-  <div class="item other">Other</div>
--->
-
-<table>
-      <tr>
-        <td><button class="filterButton all" id="all" onclick="premSelect=['A01A  ', 'A01H  ', 'A02A  ', 'A02B  ', 'A02H  ', 'A03A  ', 'A04A  ', 'A04H  ', 'A05A  ', 'A06A  ', 'A07A  ', 'A07B  ', 'A07C  ', 'B06A  ', 'B06B  ', 'B07A  ', 'B07B  ', 'B08A  ', 'B08B  ', 'B08C  ', 'B08D  ', 'C09A  ', 'C09B  ', 'C09C  ', 'C09D  ', 'C09E  ', 'C09F  ', 'C10A  ', 'C10B  ', 'C11A  ', 'C12A  ', 'C13A  ', 'C13A04', 'C13A05', 'C13A06', 'C13A07', 'C13A08', 'C13A09', 'C13A10', 'C13A11', 'C13A12', 'C14A  ', 'C14B  ', 'C14C  ', 'C14H  ', 'C15A  ', 'C15B  ', 'C15C  ', 'C15D  ', 'C16A  ', 'C16B  ', 'C16B03', 'C16B04', 'C16B05', 'C16B06', 'C16B07', 'C16B08', 'C16B09', 'C16B10', 'C16B11', 'C16B12', 'C16C  ', 'C16D  ', 'C16E  ', 'C16F  ', 'C16G  ', 'C16H  ', 'D17A  ', 'D18A  ', 'D19   ', 'D19A  ', 'D19B  ', 'D20A  ', 'D21A  ', 'D21B  ', 'D21C  ', 'D21D  ', 'D22A  ', 'D22B  ', 'D22C  ', 'D23A  ', 'D24A  ', 'D24B  ', 'D24C  ', 'D24D  ', 'D25A  ', 'D26A  ', 'D27A  ', 'D27B  ', 'D27C  ', 'D27D  ', 'D27E  ', 'D27F  ', 'D27G  ', 'D27H  ', 'D27I  ', 'D27J  ', 'D27K  ', 'D27L  ', 'D27M  ', 'D27N  ', 'D27O  ', 'D27P  ', 'D27Q  ', 'D27R  ', 'D27S  ']"></button></td>
-        <td>All Premises</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton allDP" id="allDP" onclick="premSelect=['C16E  ']"></button></td>
-        <td>All Domestic Premises</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton allOB" id="allOB" onclick="premSelect=['A01A  ', 'A01H  ', 'A02A  ', 'A02B  ', 'A02H  ', 'A03A  ', 'A04A  ', 'A04H  ', 'A05A  ', 'A06A  ', 'A07A  ', 'A07B  ', 'A07C  ', 'B06A  ', 'B06B  ', 'B07A  ', 'B07B  ', 'B08A  ', 'B08B  ', 'B08C  ', 'B08D  ', 'C09A  ', 'C09B  ', 'C09C  ', 'C09D  ', 'C09E  ', 'C09F  ', 'C10A  ', 'C10B  ', 'C11A  ', 'C12A  ', 'C13A  ', 'C13A04', 'C13A05', 'C13A06', 'C13A07', 'C13A08', 'C13A09', 'C13A10', 'C13A11', 'C13A12', 'C14A  ', 'C14B  ', 'C14C  ', 'C14H  ', 'C15A  ', 'C15B  ', 'C15C  ', 'C15D  ', 'C16A  ', 'C16B  ', 'C16B03', 'C16B04', 'C16B05', 'C16B06', 'C16B07', 'C16B08', 'C16B09', 'C16B10', 'C16B11', 'C16B12', 'C16C  ', 'C16D  ', 'C16F  ', 'C16G  ', 'C16H  ', 'D17A  ', 'D18A  ', 'D19   ', 'D19A  ', 'D19B  ', 'D20A  ', 'D21A  ', 'D21B  ', 'D21C  ', 'D21D  ', 'D22A  ', 'D22B  ', 'D22C  ', 'D23A  ', 'D24A  ', 'D24B  ', 'D24C  ', 'D24D  ', 'D25A  ', 'D26A  ', 'D27A  ', 'D27B  ', 'D27C  ', 'D27D  ', 'D27E  ', 'D27F  ', 'D27G  ', 'D27H  ', 'D27I  ', 'D27J  ', 'D27K  ', 'D27L  ', 'D27M  ', 'D27N  ', 'D27O  ', 'D27P  ', 'D27Q  ', 'D27R  ', 'D27S  ']"></button></td>
-        <td>All Other Premises</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton hotel" onclick="premSelect=['A01A  ','C16A  ']"></button></td>
-        <td>Hotel</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton factory" onclick="premSelect=['A02A  ','B06A  ']"></button></td>
-        <td>Factory</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton warehouse" onclick="premSelect=['A02B  ']"></button></td>
-        <td>Warehouse</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton office" onclick="premSelect=['A03A  ','B07A  ']"></button></td>
-        <td>Office</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton shop" onclick="premSelect=['A04A  ','A04H  ','B08A  ']"></button></td>
-        <td>Shop</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton lic" onclick="premSelect=['D21A  ']"></button></td>
-        <td>Licensed Premises</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton waste" onclick="premSelect=['A06A  ']"></button></td>
-        <td>Waste Sites</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton solar" onclick="premSelect=['A07A  ','A07B  ','A07C  ']"></button></td>
-        <td>Solar farms and BESS</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton care" onclick="premSelect=['C09A  ','C09B  ','C09C  ','C09D  ','C09E  ','C09F  ']"></button></td>
-        <td>Care Premises</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton health" onclick="premSelect=['C10A  ','D27B  ','D27C  ','D27D  ']"></button></td>
-        <td>Healthcare Premises</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton school" onclick="premSelect=['C11A  ','C12A  ','D24A  ','D24B  ','D24C  ','D24D  ','D27E  ']"></button></td>
-        <td>School</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton flats" onclick="premSelect=['C13A  ','C13A04','C13A05','C13A06','C13A07','C13A08','C13A09','C13A10','C13A11','C13A12']"></button></td>
-        <td>Flats</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton hmo" onclick="premSelect=['C14A  ','C14B  ','C14C  ','C14H  ','C15A  ','C15B  ','C15C  ','C15D  ']"></button></td>
-        <td>HMO</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton sleep" onclick="premSelect=['C16B  ','C16B04','C16B05','C16B06','C16B07','C16B08','C16B09','C16B10','C16B11','C16B12','C16C  ','C16D  ','C16E  ','C16F  ','C16G  ','C16H  ']"></button></td>
-        <td>Other Sleeping</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton prop" onclick="premSelect=['D19   ','D19A  ','D19B  ',]"></button></td>
-        <td>Proposed</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton sport" onclick="premSelect=['D25A  ','D26A  ']"></button></td>
-        <td>Sports Grounds</td>
-      </tr>
-       <tr>
-        <td><button class="filterButton comm" onclick="premSelect=['D20A  ','D27A  ']"></button></td>
-        <td>Community Centre</td>
-      </tr>
-      <tr>
-        <td><button class="filterButton other" onclick="premSelect=['D22A  ','D23A  ','D27F  ','D27G  ','D27H  ','D27I  ','D27K  ','D27L  ','D27M  ','D27N  ','D27O  ','D27P  ','D27Q  ','D27R  ','D27S  ']"></button></td>
-        <td>Other</td>
-      </tr>
-    </table>
+<!--<div>
+  <button onclick="console.log(premSelect);">Test Prem Select</button>
+  <button onclick="console.log(radios);">Test Radio Getter</button>
+</div>-->
+<form name="divPremisesFilter" id="divPremisesFilter">
+  <div class="item">
+    <input type="radio" class="radio" id="radio-all" name="fltPrem" value="fltAll" checked/>
+    <label for="radio-all">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>All</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-allDP" name="fltPrem" value="fltAllDP"/>
+    <label for="radio-allDP">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>All Domestic Premises</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-allOB" name="fltPrem" value="fltAllOB"/>
+    <label for="radio-allOB">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>All Other Buildings</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-hotel" name="fltPrem" value="fltHotel"/>
+    <label for="radio-hotel">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Hotels</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-factory" name="fltPrem" value="fltFactory"/>
+    <label for="radio-factory">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Factories</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-warehouse" name="fltPrem" value="fltWarehouse"/>
+    <label for="radio-warehouse">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Warehouses</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-office" name="fltPrem" value="fltOffice"/>
+    <label for="radio-office">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Offices</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-shop" name="fltPrem" value="fltShop"/>
+    <label for="radio-shop">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Shops</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-lic" name="fltPrem" value="fltLic"/>
+    <label for="radio-lic">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Licensed Premises</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-waste" name="fltPrem" value="fltWaste"/>
+    <label for="radio-waste">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Waste Sites</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-solar" name="fltPrem" value="fltSolar"/>
+    <label for="radio-solar">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Solar Farms & BESSes</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-care" name="fltPrem" value="fltCare"/>
+    <label for="radio-care">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Care Premises</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-health" name="fltPrem" value="fltHealth"/>
+    <label for="radio-health">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Healthcare Premises</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-school" name="fltPrem" value="fltSchool"/>
+    <label for="radio-school">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Schools</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-flats" name="fltPrem" value="fltFlats"/>
+    <label for="radio-flats">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Flats</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-hmo" name="fltPrem" value="fltHmo"/>
+    <label for="radio-hmo">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>HMOs</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-sport" name="fltPrem" value="fltSport"/>
+    <label for="radio-sport">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Sports Grounds</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-comm" name="fltPrem" value="fltComm"/>
+    <label for="radio-comm">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Community Centres</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-prop" name="fltPrem" value="fltProp"/>
+    <label for="radio-prop">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Proposed Plans</label>
+  </div>
+  <div class="item">
+    <input type="radio" class="radio" id="radio-other" name="fltPrem" value="fltOther"/>
+    <label for="radio-other">
+      <span><svg viewBox="0 0 24 24"><path d="M22.903 2.828 20.075 0 6.641 13.435 3.102 9.09 0 11.616l6.338 7.779L22.903 2.828z"/></svg></span>Other</label>
+  </form>
 </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
