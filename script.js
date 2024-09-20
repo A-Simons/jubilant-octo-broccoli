@@ -3,6 +3,9 @@ const container = document.getElementById("chart");
 var csvData = [0, 0];
 var map;
 var colourfulMode = true;
+const fltForm = document.getElementById("divPremisesFilterForm");
+var markerGroup;
+var filteredData = [];
 
 // Define constants grouping Sup Line Nos. into premises types
 const fltAll = ['A01A  ', 'A01H  ', 'A02A  ', 'A02B  ', 'A02H  ', 'A03A  ', 'A04A  ', 'A04H  ', 'A05A  ', 'A06A  ', 'A07A  ', 'A07B  ', 'A07C  ', 'B06A  ', 'B06B  ', 'B07A  ', 'B07B  ', 'B08A  ', 'B08B  ', 'B08C  ', 'B08D  ', 'C09A  ', 'C09B  ', 'C09C  ', 'C09D  ', 'C09E  ', 'C09F  ', 'C10A  ', 'C10B  ', 'C11A  ', 'C12A  ', 'C13A  ', 'C13A04', 'C13A05', 'C13A06', 'C13A07', 'C13A08', 'C13A09', 'C13A10', 'C13A11', 'C13A12', 'C14A  ', 'C14B  ', 'C14C  ', 'C14H  ', 'C15A  ', 'C15B  ', 'C15C  ', 'C15D  ', 'C16A  ', 'C16B  ', 'C16B03', 'C16B04', 'C16B05', 'C16B06', 'C16B07', 'C16B08', 'C16B09', 'C16B10', 'C16B11', 'C16B12', 'C16C  ', 'C16D  ', 'C16E  ', 'C16F  ', 'C16G  ', 'C16H  ', 'D17A  ', 'D18A  ', 'D19   ', 'D19A  ', 'D19B  ', 'D20A  ', 'D21A  ', 'D21B  ', 'D21C  ', 'D21D  ', 'D22A  ', 'D22B  ', 'D22C  ', 'D23A  ', 'D24A  ', 'D24B  ', 'D24C  ', 'D24D  ', 'D25A  ', 'D26A  ', 'D27A  ', 'D27B  ', 'D27C  ', 'D27D  ', 'D27E  ', 'D27F  ', 'D27G  ', 'D27H  ', 'D27I  ', 'D27J  ', 'D27K  ', 'D27L  ', 'D27M  ', 'D27N  ', 'D27O  ', 'D27P  ', 'D27Q  ', 'D27R  ', 'D27S  '];
@@ -27,8 +30,6 @@ const fltSport = ['D25A  ','D26A  '];
 const fltComm = ['D20A  ','D27A  '];
 const fltOther = ['D22A  ','D23A  ','D27F  ','D27G  ','D27H  ','D27I  ','D27K  ','D27L  ','D27M  ','D27N  ','D27O  ','D27P  ','D27Q  ','D27R  ','D27S  '];
 
-var premSelect = fltAll;
-
 // Co-ordinates of preset locations throughout county, each array is [latitude, longitude, zoom level]
 const northants = [52.283333, -0.833333, 10];
 const westNorthants = [52.237, -0.895, 11];
@@ -40,6 +41,81 @@ const towcester = [52.13, -0.99, 14];
 const corby = [52.48768, -0.7013, 13];
 const kettering = [52.39312, -0.72292, 13];
 const wellingborough = [52.302778, -0.674444, 14];
+
+var premSelect = fltAll;
+
+const radios = document.querySelectorAll('input[name="fltPrem"]');
+
+radios.forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    let valueName = document.querySelector('input[name="fltPrem"]:checked').value;
+    console.log(valueName);
+    var filter = [];
+    switch (valueName) {
+      case "fltAll":
+        premSelect = fltAll;
+        break;
+      case "fltAllDP":
+        premSelect = fltAllDP;
+        break;
+      case "fltAllOB":
+        premSelect = fltAllOB;
+        break;
+      case "fltHotel":
+        premSelect = fltHotel;
+        break;
+      case "fltFactory":
+        premSelect = fltFactory;
+        break;
+      case "fltWarehouse":
+        premSelect = fltWarehouse;
+        break;
+      case "fltOffice":
+        premSelect = fltOffice;
+        break;
+      case "fltShop":
+        premSelect = fltShop;
+        break;
+      case "fltLic":
+        premSelect = fltLic;
+        break;
+      case "fltWaste":
+        premSelect = fltWaste;
+        break;
+      case "fltSolar":
+        premSelect = fltSolar;
+        break;
+      case "fltCare":
+        premSelect = fltCare;
+        break;
+      case "fltHealth":
+        premSelect = fltHealth;
+        break;
+      case "fltSchool":
+        premSelect = fltSchool;
+        break;
+      case "fltFlats":
+        premSelect = fltFlats;
+        break;
+      case "fltHmo":
+        premSelect = fltHmo;
+        break;
+      case "fltSport":
+        premSelect = fltSport;
+        break;
+      case "fltComm":
+        premSelect = fltComm;
+        break;
+      case "fltProp":
+        premSelect = fltProp;
+        break;
+      case "fltOther":
+        premSelect = fltOther;
+        break;
+    }
+  filterData();
+  })
+});
 
 // Convert Sup Line No to more useful grouping
 var slnLookup = {
@@ -192,7 +268,10 @@ function initMap() {
 }).addTo(map);
 
   map.setView([mapCentre[0], mapCentre[1]], mapCentre[2]);
-}
+
+  markerGroup = L.layerGroup([]).addTo(map);
+};
+
 
 function getTooltipContent(d) {
   var content = '';
@@ -208,18 +287,20 @@ function getTooltipContent(d) {
   return content;
 }
 
-
 async function readFile(event) {
   const file = event.target.files.item(0)
   const fileContent = await file.text();
   
   csvData = d3.csvParse(fileContent)
   //update(csvData);
-  addMarkers();
+  addMarkers(csvData);
 }
 
-function addMarkers() {
-  csvData.forEach(function(d) {
+function addMarkers(data) {
+  //var markerGroup = L.layerGroup([]).addTo(map);
+  markerGroup.clearLayers();
+
+  data.forEach(function(d) {
     var marker = L.circleMarker(proj4("EPSG:27700", "WGS84",[+d.P_EASTING, +d.P_NORTHING]).reverse());
   var type = slnLookup[d.P_SUPGROUPUSE];
   var colour = "#AAA";
@@ -236,15 +317,39 @@ function addMarkers() {
     weight: 0.25,
 });
   marker.bindTooltip(getTooltipContent(d));
-  marker.addTo(map);
+  //marker.addTo(map);
+  markerGroup.addLayer(marker);
   })
-}
+};
+
+function filterData () {  
+  filteredData = [];
+  for (const d of csvData) {
+    if (premSelect.includes(d.P_SUPGROUPUSE)) {
+      filteredData.push(d);
+    }
+  }
+  addMarkers(filteredData);
+};
 
 function logLatLong() {
   csvData.forEach(function(d) {
     var latLong = L.circleMarker(proj4("EPSG:27700", "WGS84",[+d.P_EASTING, +d.P_NORTHING]).reverse());
     console.log(latLong);
   })
-}
+};
 
 initMap();
+
+//Modal introductory pop-up
+var modal = document.getElementById("modalIntro");
+var xBtn = document.getElementsByClassName("modal-close-button")[0];
+var okBtn = document.getElementsByClassName("modal-okay-button")[0];
+
+xBtn.onclick = function() {
+  modal.style.display = "none";
+}
+
+okBtn.onclick = function() {
+  modal.style.display = "none";
+}
