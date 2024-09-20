@@ -107,9 +107,11 @@ body {
 }
 
 .modal-content {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
   background-color: var(--background);
-  margin: 15% auto;
   padding: 0px;
   border: 1px solid var(--foreground);
   max-width: 30%;
@@ -197,6 +199,7 @@ button {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 #map {
@@ -215,8 +218,10 @@ button {
 
 #legend {
   position: absolute;
+  margin: 0;
+  top: 50%;
+  transform: translateY(-50%);
   right: 10px;
-  top: 100px;
   width: 220px;
   z-index: 1000;
   background: var(--background);
@@ -362,7 +367,9 @@ button {
 
 #info {
   position: absolute;
-  top: 100px;
+  margin: 0;
+  top: 50%;
+  transform: translateY(-50%);
   left: 10px;
   z-index: 1000;
 }
@@ -375,7 +382,6 @@ button {
 }
 
 .title {
-  margin: 20px;
   font-size: 20px;
   font-weight: bold;
 }
