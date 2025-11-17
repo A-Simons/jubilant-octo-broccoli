@@ -310,7 +310,7 @@ function addMarkers(data) {
       colour = "var(--foreground)";
     };
   marker.setStyle({
-    radius: 3,
+    radius: 10, // Revert to 3
     fillOpacity: 1,
     fillColor: colour,
     color: "#ddd",
