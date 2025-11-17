@@ -221,7 +221,7 @@ var colourKey = {
   "Shop": "#649a9f",
   "Lic": "#701C62",
   "Waste": "#8C5762",
-  "Solar": "#90AD1C",
+  "Solar": "Orange", // Revert back to #90AD1C
   "Care": "#39AF5B",
   "Health": "#ab2328",
   "School": "#7688BB",
