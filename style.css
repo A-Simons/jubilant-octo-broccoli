@@ -8,7 +8,7 @@
   --colShop: #649a9f;
   --colLic: #701C62;
   --colWaste: #8C5762;
-  --colSolar: #90AD1C;
+  --colSolar: Orange; /* Revert to #90AD1C */ 
   --colCare: #39AF5B;
   --colHealth: #ab2328;
   --colSchool: #7688BB;
